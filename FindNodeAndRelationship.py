@@ -1027,4 +1027,5 @@ if __name__ == '__main__':
             else:
                 infor_dict['人物'].add(myInfor[2])
     print(infor_dict)  # 上传各个结点以及他们的属性
-    #  上传所有的关系 
+    print('hhhhhhhhhh')
+    #  上传所有的关系
