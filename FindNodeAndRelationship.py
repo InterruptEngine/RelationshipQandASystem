@@ -43,8 +43,8 @@ if __name__ == '__main__':
     # print(relationship, len(relationship), sep='\n')  # 打印所有的关系
     infor_dict = dict()
     for myInfor in infor:  # 属性可能相同，但属于不同结点
-        if myInfor[1] == '堂姐':
-            # 李慎   堂姐   文安县主
+        if myInfor[1] == '相关国内联盟':
+            #学术研究恳谈会	相关国内联盟	八大学工学系联合会
             if '人物' not in infor_dict:
                 infor_dict['人物'] = set()
                 infor_dict['人物'].add(myInfor[0])
@@ -52,18 +52,15 @@ if __name__ == '__main__':
             else:
                 infor_dict['人物'].add(myInfor[0])
                 infor_dict['人物'].add(myInfor[2])
-        elif myInfor[1] == '连载平台':  # 此为关系
-            # 花开满园   连载平台   起点中文网
-            if '文学作品' not in infor_dict:
-                infor_dict['文学作品'] = set()
-                infor_dict['文学作品'].add(myInfor[0])  # '文学作品  节点'  '添加的内容  属性'
+        elif myInfor[1] == '外曾祖父':  # 此为关系
+            #李恒	外曾祖父	郭子仪
+            if '人物' not in infor_dict:
+                infor_dict['人物'] = set()
+                infor_dict['人物'].add(myInfor[0])
+                infor_dict['人物'].add(myInfor[2])
             else:
-                infor_dict['文学作品'].add(myInfor[0])
-            if '文学作品平台' not in infor_dict:
-                infor_dict['文学作品平台'] = set()
-                infor_dict['文学作品平台'].add(myInfor[2])
-            else:
-                infor_dict['文学作品平台'].add(myInfor[2])
+                infor_dict['人物'].add(myInfor[0])
+                infor_dict['人物'].add(myInfor[2])
         elif myInfor[1] == '侄孙媳妇':
             # 何应钦 侄孙媳妇 温碧霞
             if '人物' not in infor_dict:
