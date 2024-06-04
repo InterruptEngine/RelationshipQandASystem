@@ -1026,7 +1026,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
-        # elif myInfor[1] == '堂小舅子':
+        # elif myInfor[1] == '堂小舅子': 
         # elif myInfor[1] == '摄影作品':
         # elif myInfor[1] == '大爷爷':
         # elif myInfor[1] == '师爷':
