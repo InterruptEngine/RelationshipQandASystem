@@ -30,19 +30,21 @@ def generateGraph_Relation(graph, node_1, relation, node_2):
 def create_graph():
     connect_graph = Graph("http://localhost:7474", auth=("neo4j", "123456789"), name="neo4j")
     connect_graph.delete_all()  # 删掉所有结点
-    # dir_list = os.listdir("processed_file")
-    # count = 1
-    # for cur_file in dir_list:
-    #     path = os.path.join("processed_file", cur_file)
-    #     with open(path, "r", encoding="utf-8") as fp:
-    #         for line in fp.readlines():
-    #             line = line.strip()
-    #             label = cur_file.strip('.txt')
-    #             generateGraph_Node(connect_graph, label, line)  # 创建结点
-    #             print(count)
-    #             count += 1
-    #     print(path + ' is success')
-    #     count = 1
+    dir_list = os.listdir("processed_file")
+    node_dict = {}
+    count = 1
+    for cur_file in dir_list:
+        path = os.path.join("processed_file", cur_file)
+        with open(path, "r", encoding="utf-8") as fp:
+            for line in fp.readlines():
+                line = line.strip()
+                label = cur_file.strip('.txt')
+                node = generateGraph_Node(connect_graph, label, line)  # 创建结点
+                node_dict[label+line] = node
+                print(count)
+                count += 1
+        print(path + ' is success')
+        count = 1
     count = 1
     with open(r'data/kg(utf8).txt', 'r', encoding='utf-8') as fp:
         for line in fp.readlines():

@@ -38,8 +38,9 @@ if __name__ == '__main__':
     # print(len(infor)) # 打印数组长度
     # print(node)
     # print(relationship, len(relationship), sep='\n')  # 打印所有的关系
+    result_data = ''
     infor_dict = dict()
-    node_list = ['人物', '音乐作品', '文学作品', '出版社','其他结点',
+    node_list = ['人物', '音乐作品', '文学作品', '出版社', '其他结点',
                  '学校', '影视作品', '综艺节目', '协会', '单位', '学校类别']
     for i in node_list:
         infor_dict[i] = set()
@@ -53,6 +54,7 @@ if __name__ == '__main__':
             else:
                 infor_dict['人物'].add(myInfor[0])
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '连载平台':  # 此为关系
             # 花开满园   连载平台   起点中文网
             if '文学作品' not in infor_dict:
@@ -237,7 +239,7 @@ if __name__ == '__main__':
             # 香港浸会大学   其他关系   王锦辉
             if '大学' in myInfor[0]:
                 if '学校' not in infor_dict:
-                    infor_dict['学校']=set()
+                    infor_dict['学校'] = set()
                     infor_dict['学校'].add(myInfor[0])
                 else:
                     infor_dict['学校'].add(myInfor[0])
@@ -2102,7 +2104,7 @@ if __name__ == '__main__':
             infor_dict['人物'].add(myInfor[2])
 
 
-        elif myInfor[1] == '专职院士数':         # 可能有问题
+        elif myInfor[1] == '专职院士数':  # 可能有问题
             # 浙江大学	专职院士数	中国科学院
             # 湖南师范大学	专职院士数	中国工程院院士
             # 合肥工业大学	专职院士数	中国工程院院士
@@ -2139,5 +2141,7 @@ if __name__ == '__main__':
     for key in infor_dict:
         with open(f'processed_file//{key}.txt', 'w', encoding='utf-8') as fp:
             fp.write("\n".join(infor_dict[key]))
-    print(type(infor_dict['人物']),infor_dict['人物'])  # 上传各个结点以及他们的属性
+    with open(r'processed_file//result_data.txt', 'w', encoding='utf-8') as fp:
+        fp.write(result_data)
+    print(type(infor_dict['人物']), infor_dict['人物'])  # 上传各个结点以及他们的属性
     #  上传所有的关系
