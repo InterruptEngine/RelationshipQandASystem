@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # relationship = set()  # 所有的关系集合
     infor = list()  # 所有的三元式列表
     # node = set()  # 所有的结点集合
-    with open(r'kg(utf8).txt', 'r', encoding='utf-8') as fp:
+    with open(r'data//kg(utf8).txt', 'r', encoding='utf-8') as fp:
         for line in fp.readlines():
             line = line.strip('\n')  # 切分 ‘\n'
             line_list = line.split('\t')  # 利用'\t'切分
