@@ -44,6 +44,7 @@ if __name__ == '__main__':
                  '学校', '影视作品', '综艺节目', '协会', '单位', '学校类别']
     for i in node_list:
         infor_dict[i] = set()
+    count = 0
     for myInfor in infor:  # 属性可能相同，但属于不同结点
         if myInfor[1] == '堂姐':
             # 李慎   堂姐   文安县主
@@ -67,6 +68,7 @@ if __name__ == '__main__':
                 infor_dict['文学作品平台'].add(myInfor[2])
             else:
                 infor_dict['文学作品平台'].add(myInfor[2])
+            result_data += '文学作品$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '文学作品平台$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '侄孙媳妇':
             # 何应钦 侄孙媳妇 温碧霞
             if '人物' not in infor_dict:
@@ -79,6 +81,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '合作人':
             # 洪金宝   合作人   袁和平
             if '人物' not in infor_dict:
@@ -91,6 +94,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '文学作品':
             # 蒋梦麟   文学作品   现代世界中的中国
             if '人物' not in infor_dict:
@@ -103,6 +107,7 @@ if __name__ == '__main__':
                 infor_dict['文学作品'].add(myInfor[2])
             else:
                 infor_dict['文学作品'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '文学作品$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '弟媳':
             # 洪深   弟媳   钱似莺
             if '人物' not in infor_dict:
@@ -115,6 +120,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '导师':
             # 王巧   导师   陈爽
             if '人物' not in infor_dict:
@@ -127,6 +133,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '堂小舅子':
             # 郭德纲   堂小舅子   王俣钦
             if '人物' not in infor_dict:
@@ -139,6 +146,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '摄影作品':
             # 赵小丁  摄影作品   长城
             if '人物' not in infor_dict:
@@ -151,6 +159,7 @@ if __name__ == '__main__':
                 infor_dict['影视作品'].add(myInfor[2])
             else:
                 infor_dict['影视作品'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '影视作品$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '大爷爷':
             # 凌潇肃   大爷爷   凌子风
             if '人物' not in infor_dict:
@@ -163,6 +172,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '师爷':
             # 龙越   师爷   谢平安
             if '人物' not in infor_dict:
@@ -175,6 +185,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '作者':
             # 长歌行   作者   夏达
             if '文学作品' not in infor_dict:
@@ -187,6 +198,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '文学作品$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '继母':
             # 张若昀   继母   刘蓓
             if '人物' not in infor_dict:
@@ -199,6 +211,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '前夫':
             # 唐宁  前夫   邓伟杰
             if '人物' not in infor_dict:
@@ -211,6 +224,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '姑妈':
             # 常乐公主   姑妈   同安公主
             if '人物' not in infor_dict:
@@ -223,6 +237,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '恋人':
             #  蔡康永   恋人   刘坤龙
             if '人物' not in infor_dict:
@@ -235,6 +250,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '其他关系':  # 可能有问题
             # 香港浸会大学   其他关系   王锦辉
             if '大学' in myInfor[0]:
@@ -248,6 +264,7 @@ if __name__ == '__main__':
                     infor_dict['其他结点'].add(myInfor[2])
                 else:
                     infor_dict['其他结点'].add(myInfor[2])
+                result_data += '学校$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '其他结点$$$' + myInfor[2] + '\n'
             else:
                 if '其他结点' not in infor_dict:
                     infor_dict['其他结点'] = set()
@@ -259,6 +276,7 @@ if __name__ == '__main__':
                     infor_dict['其他结点'].add(myInfor[2])
                 else:
                     infor_dict['其他结点'].add(myInfor[2])
+                result_data += '其他结点$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '其他结点$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '第三任妻子':
             # 陈独秀   第三任妻子   潘兰珍
             if '人物' not in infor_dict:
@@ -271,6 +289,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '师妹':
             # 蒋璐霞   师妹   阎小乐
             if '人物' not in infor_dict:
@@ -283,6 +302,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '第一任妻子':
             # 毛泽东   第一任妻子   罗一秀
             if '人物' not in infor_dict:
@@ -295,6 +315,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '养父':
             # 萧赞   养父   萧衍
             if '人物' not in infor_dict:
@@ -307,6 +328,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '对手':
             # 富兰克林·罗斯福   对手   赫伯特·克拉克·胡佛
             if '人物' not in infor_dict:
@@ -319,6 +341,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '养母':
             # 李忠   养母   王皇后
             if '人物' not in infor_dict:
@@ -331,6 +354,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '发行专辑':
             # 吴青峰   发行专辑   陪我歌唱
             if '人物' not in infor_dict:
@@ -343,6 +367,7 @@ if __name__ == '__main__':
                 infor_dict['专辑'].add(myInfor[2])
             else:
                 infor_dict['专辑'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '专辑$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '设立单位':
             # 中国工程院院士   设立单位   中华人民共和国国务院
             if '其他结点' not in infor_dict:
@@ -355,6 +380,7 @@ if __name__ == '__main__':
                 infor_dict['单位'].add(myInfor[2])
             else:
                 infor_dict['单位'].add(myInfor[2])
+            result_data += '其他结点$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '单位$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '女儿':
             # 朱元璋  女儿   崇宁公主
             if '人物' not in infor_dict:
@@ -367,6 +393,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '原配':
             #   郭沫若   原配   张琼华
             if '人物' not in infor_dict:
@@ -379,6 +406,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '挚爱':
             # 张国荣   挚爱   唐鹤德
             if '人物' not in infor_dict:
@@ -391,6 +419,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '主要演员':
             # 再见歌舞伎町   主要演员   田口智朗
             if '影视作品' not in infor_dict:
@@ -403,6 +432,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '影视作品$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '义妹':
             # 罗俊林   义妹   杨晨璐
             if '人物' not in infor_dict:
@@ -415,6 +445,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '曾孙子':
             # 朱瞻基   曾孙子   朱祐梈
             if '人物' not in infor_dict:
@@ -427,6 +458,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '成员':
             # 低调组合   成员   杨和苏
             if '人物' not in infor_dict:
@@ -439,6 +471,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '侄孙子':
             # 何应钦   侄孙子   何祖光
             if '人物' not in infor_dict:
@@ -451,6 +484,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '养女':
             # 章士钊   养女   章含之
             if '人物' not in infor_dict:
@@ -463,6 +497,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '公公':
             # 显肃皇后   公公   赵顼
             if '人物' not in infor_dict:
@@ -475,6 +510,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '历任领导':
             # 西南交通大学   历任领导   王伯群
             if '单位' not in infor_dict:
@@ -487,6 +523,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '单位$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '姨父':
             # 丘崇   姨父   贺兰初真
             if '人物' not in infor_dict:
@@ -499,6 +536,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '堂侄':
             # 毛泽东   堂侄   毛远耀
             if '人物' not in infor_dict:
@@ -511,6 +549,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '丈夫':
             # 秦子越   丈夫   聂远
             if '人物' not in infor_dict:
@@ -523,6 +562,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '第二任妻子':
             # 汪道涵   第二任妻子   孙维聪
             if '人物' not in infor_dict:
@@ -535,6 +575,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '办学团体':
             # 香港华仁书院   办学团体   耶稣会
             if '学校' not in infor_dict:
@@ -547,6 +588,7 @@ if __name__ == '__main__':
                 infor_dict['协会'].add(myInfor[2])
             else:
                 infor_dict['协会'].add(myInfor[2])
+            result_data += '学校$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '协会$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '岳父':
             # 李元桂   岳父   金镛
             if '人物' not in infor_dict:
@@ -559,6 +601,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '外祖父':
             # 太穆皇后   外祖父   宇文泰
             if '人物' not in infor_dict:
@@ -571,6 +614,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '伯父':
             # 朱贵烰   伯父   朱棡
             if '人物' not in infor_dict:
@@ -583,6 +627,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '学弟':
             # 李健   学弟   孙岩
             if '人物' not in infor_dict:
@@ -595,6 +640,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '师父':
             # 张艺兴   师父   黄磊
             if '人物' not in infor_dict:
@@ -607,6 +653,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '伴侣':
             # 鲁迅   伴侣   许广平
             if '人物' not in infor_dict:
@@ -619,6 +666,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '表哥':
             # 李贤   表哥   武承嗣
             if '人物' not in infor_dict:
@@ -631,6 +679,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '学长':
             # 李健   学长   林家川
             if '人物' not in infor_dict:
@@ -643,6 +692,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '妹夫':
             # 李承乾   妹夫   薛瓘
             if '人物' not in infor_dict:
@@ -655,6 +705,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '姐姐':
             # 秦俊杰   姐姐   李玥
             if '人物' not in infor_dict:
@@ -667,6 +718,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '师祖':
             # 邓沐玮   师祖   裘盛戎
             if '人物' not in infor_dict:
@@ -679,6 +731,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '嫡母':
             # 李重茂   嫡母   韦皇后
             if '人物' not in infor_dict:
@@ -691,6 +744,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '岳母':
             # 柴绍   岳母   太穆皇后
             if '人物' not in infor_dict:
@@ -703,6 +757,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '男友':
             # 刘雨柔   男友   胡凯翔
             if '人物' not in infor_dict:
@@ -715,6 +770,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '曾外孙子':
             # 冯胜   曾外孙子   朱子墐
             if '人物' not in infor_dict:
@@ -727,6 +783,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '舅母':
             # 王美怡   舅母   焦姣
             if '人物' not in infor_dict:
@@ -739,6 +796,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '前女友':
             # 王阳明  前女友   张俪
             if '人物' not in infor_dict:
@@ -751,6 +809,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '堂兄':
             # 朱逊烇   堂兄   朱高炽
             if '人物' not in infor_dict:
@@ -763,6 +822,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '老师':
             # 张默   老师   黄定宇
             if '人物' not in infor_dict:
@@ -775,6 +835,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '爱人':
             # 艾略特·佩吉   爱人   艾玛·波特纳
             if '人物' not in infor_dict:
@@ -787,6 +848,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '小叔子':
             # 卢贵兰   小叔子   元湛
             if '人物' not in infor_dict:
@@ -799,6 +861,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '儿子':
             # 萧瑟瑟   儿子   耶律敖卢斡
             if '人物' not in infor_dict:
@@ -811,6 +874,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '女朋友':
             # 戚其义   女朋友   简慕华
             if '人物' not in infor_dict:
@@ -823,6 +887,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '奶奶':
             # 冯钟越   奶奶   吴清芝
             if '人物' not in infor_dict:
@@ -835,6 +900,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '综艺节目':
             # 香奈儿·辛普森   综艺节目   音乐快递
             if '人物' not in infor_dict:
@@ -847,6 +913,7 @@ if __name__ == '__main__':
                 infor_dict['综艺节目'].add(myInfor[2])
             else:
                 infor_dict['综艺节目'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '综艺节目$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '恩师':
             # 刘昊然   恩师   陈思诚
             if '人物' not in infor_dict:
@@ -859,6 +926,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '外孙':
             # 彭玉   外孙   孟阿赛
             if '人物' not in infor_dict:
@@ -871,6 +939,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '创始人':
             # 四川音乐学院   创始人   熊佛西
             if '学校' not in infor_dict:
@@ -883,6 +952,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '学校$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '员工':
             # 黄子韬   员工   徐艺洋
             if '人物' not in infor_dict:
@@ -895,6 +965,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '执导':
             # 高峰   执导   雪狼
             if '人物' not in infor_dict:
@@ -907,6 +978,7 @@ if __name__ == '__main__':
                 infor_dict['作品'].add(myInfor[2])
             else:
                 infor_dict['作品'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '作品$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '侄子':
             # 赵辉   侄子   朱逊炓
             if '人物' not in infor_dict:
@@ -919,6 +991,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '弟子':
             # 徐悲鸿   弟子   戴泽
             if '人物' not in infor_dict:
@@ -931,6 +1004,7 @@ if __name__ == '__main__':
                 infor_dict['人物'].add(myInfor[2])
             else:
                 infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '师弟':
             # 冯巩  师弟	李增瑞
             if '人物' not in infor_dict:
@@ -2137,6 +2211,8 @@ if __name__ == '__main__':
                             '姑姑', '师姐', '大舅哥', '队友', '外甥女', '小姨子', '堂妹']:
             infor_dict['人物'].add(myInfor[0])
             infor_dict['人物'].add(myInfor[2])
+        print(count)
+        count += 1
 
     for key in infor_dict:
         with open(f'processed_file//{key}.txt', 'w', encoding='utf-8') as fp:
