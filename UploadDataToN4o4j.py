@@ -40,10 +40,18 @@ def create_graph():
         print(path + ' is success')
         count = 1
 
+    count = 1
     with open(r'data/kg(utf8).txt', 'r', encoding='utf-8') as fp:
         for line in fp.readlines():
-            start, relationship, end = line.strip().split('\t')
+            line = line.split('\t')
+            start = line[0]
+            relationship = line[1]
+            end = line[2]
+            end = end.strip('\n')
+            # print(start, relationship, end)
             generateGraph_Relation(connect_graph, start, relationship, end)
+            print(count)
+            count += 1
 
 
 if __name__ == '__main__':
