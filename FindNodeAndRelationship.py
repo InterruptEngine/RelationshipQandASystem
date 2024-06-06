@@ -2184,7 +2184,7 @@ if __name__ == '__main__':
     for key in infor_dict:
         with open(f'processed_file//{key}.txt', 'w', encoding='utf-8') as fp:
             fp.write("\n".join(infor_dict[key]))
-    with open(r'processed_file//result_data.txt', 'w', encoding='utf-8') as fp:
+    with open(r'data/result_data.txt', 'w', encoding='utf-8') as fp:
         fp.write(result_data)
     print(type(infor_dict['人物']), infor_dict['人物'])  # 上传各个结点以及他们的属性
     #  上传所有的关系
