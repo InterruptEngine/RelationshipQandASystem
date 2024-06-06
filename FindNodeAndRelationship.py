@@ -1,7 +1,7 @@
 """
 关系:
 {'堂姐', '连载平台', '侄孙媳妇', '合作人', '文学作品', '弟媳', '导师', '堂小舅子', '摄影作品', '大爷爷', '师爷', '作者',
- '继母', '办学性质', '未婚夫', '前夫', '姑妈', '恋人', '其他关系', '第三任妻子', '师妹', '主要配音', '第一任妻子',
+ '继母', '$$$办学性质', '$$$未婚夫', '前夫', '姑妈', '恋人', '其他关系', '第三任妻子', '师妹', '$$$主要配音', '第一任妻子',
  '养父', '对手', '养母', '发行专辑', '设立单位', '女儿', '原配', '挚爱', '主要演员', '义妹', '曾孙子', '成员', '侄孙子',
  '养女', '公公', '历任领导', '姨父', '堂侄', '丈夫', '第二任妻子', '办学团体', '岳父', '外祖父', '伯父', '学弟', '师父',
  '伴侣', '表哥', '学长', '妹夫', '姐姐', '师祖', '嫡母', '岳母', '男友', '曾外孙子', '舅母', '前女友', '堂兄', '老师',
@@ -212,6 +212,32 @@ if __name__ == '__main__':
             else:
                 infor_dict['人物'].add(myInfor[2])
             result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
+        elif myInfor[1]=='办学性质':
+            # 四川师范学院   办学性质   公立大学
+            if '学校' not in infor_dict:
+                infor_dict['学校'] = set()
+                infor_dict['学校'].add(myInfor[0])
+            else:
+                infor_dict['学校'].add(myInfor[0])
+            if '学校类别' not in infor_dict:
+                infor_dict['学校类别'] = set()
+                infor_dict['学校类别'].add(myInfor[2])
+            else:
+                infor_dict['学校类别'].add(myInfor[2])
+            result_data += '学校$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '学校类别$$$' + myInfor[2] + '\n'
+        elif myInfor[1]=='未婚夫':
+            # 汤洛雯   未婚夫   马国明
+            if '人物' not in infor_dict:
+                infor_dict['人物'] = set()
+                infor_dict['人物'].add(myInfor[0])
+            else:
+                infor_dict['人物'].add(myInfor[0])
+            if '人物' not in infor_dict:
+                infor_dict['人物'] = set()
+                infor_dict['人物'].add(myInfor[2])
+            else:
+                infor_dict['人物'].add(myInfor[2])
+            result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '前夫':
             # 唐宁  前夫   邓伟杰
             if '人物' not in infor_dict:
@@ -303,6 +329,19 @@ if __name__ == '__main__':
             else:
                 infor_dict['人物'].add(myInfor[2])
             result_data += '人物$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
+        elif myInfor[1] == '主要配音':
+            # 鹿鼎记   主要配音   陈逸恒
+            if '影视作品' not in infor_dict:
+                infor_dict['影视作品'] = set()
+                infor_dict['影视作品'].add(myInfor[0])
+            else:
+                infor_dict['影视作品'].add(myInfor[0])
+            if '人物' not in infor_dict:
+                infor_dict['人物'] = set()
+                infor_dict['人物'].add(myInfor[2])
+            else:
+                infor_dict['人物'].add(myInfor[2])
+            result_data += '影视作品$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '人物$$$' + myInfor[2] + '\n'
         elif myInfor[1] == '第一任妻子':
             # 毛泽东   第一任妻子   罗一秀
             if '人物' not in infor_dict:
@@ -2137,6 +2176,8 @@ if __name__ == '__main__':
             infor_dict['学校'].add(myInfor[0])
             infor_dict['学校类别'].add(myInfor[2])
             result_data += '学校$$$' + myInfor[0] + '\t' + myInfor[1] + '\t' + '学校类别$$$' + myInfor[2] + '\n'
+        else:
+            raise Exception(f"{myInfor[1]} not found")
         print(count)
         count += 1
 
