@@ -1,5 +1,7 @@
-import ahocorasick
 import re
+import json
+import ahocorasick
+
 
 
 class AnalyseQuestion:
@@ -7,43 +9,9 @@ class AnalyseQuestion:
         """
         加载所有数据结点以及问题
         """
-        self.album_list = [i.strip() for i in open("processed_file//专辑.txt", "r", encoding="utf-8") if i.strip()]
-        self.character_list = [i.strip() for i in open("processed_file//人物.txt", "r", encoding="utf-8") if i.strip()]
-        self.works_list = [i.strip() for i in open("processed_file//作品.txt", "r", encoding="utf-8") if i.strip()]
-        self.otherNodes_list = [i.strip() for i in open("processed_file//其他结点.txt", "r", encoding="utf-8") if
-                                i.strip()]
-        self.press_list = [i.strip() for i in open("processed_file//出版社.txt", "r", encoding="utf-8") if i.strip()]
-        self.association_list = [i.strip() for i in open("processed_file//协会.txt", "r", encoding="utf-8") if
-                                 i.strip()]
-        self.unit_list = [i.strip() for i in open("processed_file//单位.txt", "r", encoding="utf-8") if i.strip()]
-        self.school_list = [i.strip() for i in open("processed_file//学校.txt", "r", encoding="utf-8") if
-                            i.strip()]
-        self.schoolCategory_list = [i.strip() for i in open("processed_file//学校类别.txt", "r", encoding="utf-8") if
-                                    i.strip()]
-        self.filmAndTelevisionWork_list = [i.strip() for i in
-                                           open("processed_file//影视作品.txt", "r", encoding="utf-8") if
-                                           i.strip()]
-        self.literaryWorks_list = [i.strip() for i in open("processed_file//文学作品.txt", "r", encoding="utf-8") if
-                                   i.strip()]
-        self.literaryWorksPlatform_list = [i.strip() for i in
-                                           open("processed_file//文学作品平台.txt", "r", encoding="utf-8") if
-                                           i.strip()]
-        self.characteristic_list = [i.strip() for i in
-                                    open("processed_file//特色.txt", "r", encoding="utf-8") if
-                                    i.strip()]
-        self.varietyPrograms_list = [i.strip() for i in
-                                     open("processed_file//综艺节目.txt", "r", encoding="utf-8") if
-                                     i.strip()]
-        self.musicWorks_list = [i.strip() for i in
-                                open("processed_file//音乐作品.txt", "r", encoding="utf-8") if
-                                i.strip()]
-        self.all_words_set = set(
-            self.album_list + self.character_list + self.works_list + self.otherNodes_list + self.press_list
-            + self.association_list + self.unit_list + self.school_list + self.schoolCategory_list +
-            self.filmAndTelevisionWork_list + self.literaryWorks_list + self.literaryWorksPlatform_list +
-            self.characteristic_list + self.varietyPrograms_list + self.musicWorks_list
-        )
-        self.all_words_tree = self.build_actree(self.all_words_set)  # 调用actree函数  # 方便快速查找
+        with open("all_node.txt", 'r', encoding='utf-8') as fp:
+            self.all_node_list = [i.strip() for i in fp.readlines()]
+        self.all_words_tree = self.build_actree(self.all_node_list)  # 调用actree函数  # 方便快速查找
         self.all_words_dict = self.build_wdtype_dict()  # 各个结点
         # 问题中的关键词
         self.possible_isssues()  # 可能提到的问题
@@ -63,39 +31,41 @@ class AnalyseQuestion:
         """
         各个结点所拥有的标签
         """
-        wd_dict = dict()
-        for wd in self.all_words_set:
-            wd_dict[wd] = []
-            if wd in self.album_list:
-                wd_dict[wd].append("album")
-            if wd in self.character_list:
-                wd_dict[wd].append("character")
-            if wd in self.works_list:
-                wd_dict[wd].append("works")
-            if wd in self.otherNodes_list:
-                wd_dict[wd].append("otherNodes")
-            if wd in self.press_list:
-                wd_dict[wd].append("press")
-            if wd in self.association_list:
-                wd_dict[wd].append("association")
-            if wd in self.unit_list:
-                wd_dict[wd].append("unit")
-            if wd in self.school_list:
-                wd_dict[wd].append("school")
-            if wd in self.schoolCategory_list:
-                wd_dict[wd].append("schoolCategory")
-            if wd in self.filmAndTelevisionWork_list:
-                wd_dict[wd].append("filmAndTelevisionWork")
-            if wd in self.literaryWorks_list:
-                wd_dict[wd].append("literaryWorks")
-            if wd in self.literaryWorksPlatform_list:
-                wd_dict[wd].append("literaryWorksPlatform")
-            if wd in self.characteristic_list:
-                wd_dict[wd].append("characteristic")
-            if wd in self.varietyPrograms_list:
-                wd_dict[wd].append("varietyPrograms")
-            if wd in self.musicWorks_list:
-                wd_dict[wd].append("musicWorks")
+        # wd_dict = dict()
+        # for wd in self.all_words_set:
+        #     wd_dict[wd] = []
+        #     if wd in self.album_list:
+        #         wd_dict[wd].append("album")
+        #     if wd in self.character_list:
+        #         wd_dict[wd].append("character")
+        #     if wd in self.works_list:
+        #         wd_dict[wd].append("works")
+        #     if wd in self.otherNodes_list:
+        #         wd_dict[wd].append("otherNodes")
+        #     if wd in self.press_list:
+        #         wd_dict[wd].append("press")
+        #     if wd in self.association_list:
+        #         wd_dict[wd].append("association")
+        #     if wd in self.unit_list:
+        #         wd_dict[wd].append("unit")
+        #     if wd in self.school_list:
+        #         wd_dict[wd].append("school")
+        #     if wd in self.schoolCategory_list:
+        #         wd_dict[wd].append("schoolCategory")
+        #     if wd in self.filmAndTelevisionWork_list:
+        #         wd_dict[wd].append("filmAndTelevisionWork")
+        #     if wd in self.literaryWorks_list:
+        #         wd_dict[wd].append("literaryWorks")
+        #     if wd in self.literaryWorksPlatform_list:
+        #         wd_dict[wd].append("literaryWorksPlatform")
+        #     if wd in self.characteristic_list:
+        #         wd_dict[wd].append("characteristic")
+        #     if wd in self.varietyPrograms_list:
+        #         wd_dict[wd].append("varietyPrograms")
+        #     if wd in self.musicWorks_list:
+        #         wd_dict[wd].append("musicWorks")
+        with open("all_nodeAndLabel.json", "r", encoding="utf-8")as fp:
+            wd_dict = json.load(fp)
         return wd_dict  # 返回各个结点所对应的标签
 
     def possible_isssues(self):
@@ -106,12 +76,6 @@ class AnalyseQuestion:
         # egg:浅井初的妹妹是谁？     朱清的伯父有哪些？
         self.question_countBook_list = ["多少本书", "写过多少本书"]  # 依次找问题写下去
         # egg:许嘉璐一共写过多少本书？
-
-
-
-
-
-
 
     def analyze_question(self, question):  # 分析问题
         """
@@ -130,11 +94,6 @@ class AnalyseQuestion:
             question_types.append("character_to_simpleIssue")
         if self.check_wods(self.question_countBook_list, question) and "character" in types:
             question_types.append("character_to_countBook")
-
-
-
-
-
 
         data['question_types'] = question_types  # 其中遇到的问题类型   # 'question_types’:[问题类型]
         return data  # {'arg':{结点：标签},'question_types':[标签(问题)所对应的类型]}
