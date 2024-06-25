@@ -1,7 +1,8 @@
 import re
 import json
+import jieba.posseg
+import jieba
 import ahocorasick
-
 
 
 class AnalyseQuestion:
@@ -11,6 +12,8 @@ class AnalyseQuestion:
         """
         with open("all_node.txt", 'r', encoding='utf-8') as fp:
             self.all_node_list = [i.strip() for i in fp.readlines()]
+        # for i in self.all_node_list:
+        #     jieba.add_word(i, tag='n')
         self.all_words_tree = self.build_actree(self.all_node_list)  # 调用actree函数  # 方便快速查找
         self.all_words_dict = self.build_wdtype_dict()  # 各个结点
         # 问题中的关键词
@@ -64,7 +67,7 @@ class AnalyseQuestion:
         #         wd_dict[wd].append("varietyPrograms")
         #     if wd in self.musicWorks_list:
         #         wd_dict[wd].append("musicWorks")
-        with open("all_nodeAndLabel.json", "r", encoding="utf-8")as fp:
+        with open("all_nodeAndLabel.json", "r", encoding="utf-8") as fp:
             wd_dict = json.load(fp)
         return wd_dict  # 返回各个结点所对应的标签
 
@@ -104,18 +107,188 @@ class AnalyseQuestion:
         :param question: 问题
         :return: 返回每个结点所对应的标签
         """
+        # function1:
+        print(question)
         regin_wds = []
         for i in self.all_words_tree.iter(question):  # ahocorasick库 匹配问题  iter返回一个元组，i的形式如(3, (23192, '小明'))
             wd = i[1][1]
-            regin_wds.append(wd)
+            regin_wds.append(wd)  # 寻找实体
         stop_wds = []
         for wd1 in regin_wds:
             for wd2 in regin_wds:
                 if wd1 in wd2 and wd1 != wd2:
                     stop_wds.append(wd1)  # stop_wds为其中重复的短的词
-        final_wds = [i for i in regin_wds if i not in stop_wds]
-        final_dict = {i: self.all_words_dict.get(i) for i in final_wds}  # 每个结点所对应的标签
+        final_wds = [i for i in regin_wds if i not in stop_wds]  # 去掉重复的词语
+        relationship = ['堂姐', '连载平台', '侄孙媳妇', '合作人', '文学作品', '弟媳', '导师', '堂小舅子',
+                        '摄影作品', '大爷爷',
+                        '师爷', '作者',
+                        '继母', '办学性质', '未婚夫', '前夫', '姑妈', '恋人', '其他关系', '第三任妻子', '师妹',
+                        '主要配音',
+                        '第一任妻子',
+                        '养父', '对手', '养母', '发行专辑', '设立单位', '女儿', '原配', '挚爱', '主要演员', '义妹',
+                        '曾孙子',
+                        '成员', '侄孙子',
+                        '养女', '公公', '历任领导', '姨父', '堂侄', '丈夫', '第二任妻子', '办学团体', '岳父',
+                        '外祖父', '伯父',
+                        '学弟', '师父',
+                        '伴侣', '表哥', '学长', '妹夫', '姐姐', '师祖', '嫡母', '岳母', '男友', '曾外孙子', '舅母',
+                        '前女友',
+                        '堂兄', '老师',
+                        '爱人', '小叔子', '儿子', '女朋友', '奶奶', '综艺节目', '恩师', '外孙', '创始人', '员工',
+                        '执导',
+                        '侄子', '弟子',
+                        '师弟', '母亲', '堂哥', '前儿媳', '主要角色', '舅父', '妻子', '外孙女', '第二任丈夫',
+                        '生父', '旧爱',
+                        '代表作品',
+                        '朋友', '学校特色', '妻姐', '养子', '兄弟', '创办', '旗下艺人', '曾外祖父', '音乐视频',
+                        '前男友',
+                        '外曾孙子', '堂弟',
+                        '继子', '助理', '院系设置', '继父', '大伯哥', '徒弟', '知己', '儿媳', '堂伯父', '女婿',
+                        '亲家公',
+                        '曾祖父', '叔父',
+                        '姑母', '师傅', '歌曲原唱', '云孙', '外甥', '姑父', '学妹', '小姑子', '第四任妻子', '偶像',
+                        '前任',
+                        '表姨', '社长',
+                        '亲家母', '战友', '学校身份', '主要作品', '生母', '类别', '外曾祖母', '祖父', '毕业院校',
+                        '知名人物',
+                        '小舅子', '庶子',
+                        '所属机构', '表妹', '制作', '登场作品', '嫂子', '好友', '前公公', '义女', '师兄', '曾孙',
+                        '同学',
+                        '配音', '堂舅',
+                        '相关国内联盟', '外曾祖父', '男朋友', '叔叔', '大姨子', '侄女', '音乐作品', '简称', '义子',
+                        '曾祖母',
+                        '经纪人', '先夫',
+                        '未婚妻', '姨夫', '表姑父', '义兄', '为他人创作音乐', '表侄', '连襟', '姐夫', '出版社',
+                        '学生', '弟弟',
+                        '同门', '师生',
+                        '叔外公', '曾孙女', '教练', '侄孙', '老板', '妹妹', '前队友', '表兄', '孙子', '亡妻',
+                        '经纪公司',
+                        '代表', '大姑子',
+                        '第六任妻子', '搭档', '伯母', '祖母', '领导', '继任', '参演', '表叔', '伯乐', '婶母',
+                        '婆婆',
+                        '现任领导', '外曾孙女',
+                        '表弟', '外甥女婿', '第五任妻子', '编剧', '曾外祖母', '学姐', '义母', '类型', '孙女',
+                        '表姐', '姨母',
+                        '前妻',
+                        '合作院校', '继女', '叔外祖父', '妾', '专职院士数', '主持', '法人', '妯娌', '学校类别',
+                        '义弟', '哥哥',
+                        '大舅子',
+                        '义父', '伯伯', '父亲', '外祖母', '第一任丈夫', '外孙子', '玄孙', '姑姑', '师姐', '大舅哥',
+                        '队友',
+                        '外甥女', '小姨子',
+                        '堂妹']
+        for word in final_wds:
+            if word in relationship:
+                final_wds.remove(word)  # 去掉实体中的关系
+        final_dict = {i: self.all_words_dict.get(i) for i in final_wds for label in self.all_words_dict.get(i) if
+                      label not in ['musicWorks', 'filmAndTelevisionWork', 'works', 'album','literaryWorks']}  # 每个结点所对应的标签
+        # final_dict = {i: self.all_words_dict.get(i) for i in final_wds}  # 每个结点所对应的标签
+        print(final_dict)
         return final_dict  # 返回每个结点所对应的标签
+
+        # funciton2:
+        # final_wds = list()
+        # words = jieba.posseg.cut(question)
+        # for w in words:
+        #     if w.flag in ['nr', 'nrfg', 'nrt', 'ns', 'nt', 'n', 'nr1', 'nr2', 'nrj', 'nrf', 'ns', 'nsf', 'nz', 'ni',
+        #                   'ng', 'nl']:
+        #         final_wds.append(w.word)  # 去掉不满足的词性
+        # print(words)
+        # relationship = ['堂姐', '连载平台', '侄孙媳妇', '合作人', '文学作品', '弟媳', '导师', '堂小舅子',
+        #                 '摄影作品', '大爷爷',
+        #                 '师爷', '作者',
+        #                 '继母', '办学性质', '未婚夫', '前夫', '姑妈', '恋人', '其他关系', '第三任妻子', '师妹',
+        #                 '主要配音',
+        #                 '第一任妻子',
+        #                 '养父', '对手', '养母', '发行专辑', '设立单位', '女儿', '原配', '挚爱', '主要演员', '义妹',
+        #                 '曾孙子',
+        #                 '成员', '侄孙子',
+        #                 '养女', '公公', '历任领导', '姨父', '堂侄', '丈夫', '第二任妻子', '办学团体', '岳父',
+        #                 '外祖父', '伯父',
+        #                 '学弟', '师父',
+        #                 '伴侣', '表哥', '学长', '妹夫', '姐姐', '师祖', '嫡母', '岳母', '男友', '曾外孙子', '舅母',
+        #                 '前女友',
+        #                 '堂兄', '老师',
+        #                 '爱人', '小叔子', '儿子', '女朋友', '奶奶', '综艺节目', '恩师', '外孙', '创始人', '员工',
+        #                 '执导',
+        #                 '侄子', '弟子',
+        #                 '师弟', '母亲', '堂哥', '前儿媳', '主要角色', '舅父', '妻子', '外孙女', '第二任丈夫',
+        #                 '生父', '旧爱',
+        #                 '代表作品',
+        #                 '朋友', '学校特色', '妻姐', '养子', '兄弟', '创办', '旗下艺人', '曾外祖父', '音乐视频',
+        #                 '前男友',
+        #                 '外曾孙子', '堂弟',
+        #                 '继子', '助理', '院系设置', '继父', '大伯哥', '徒弟', '知己', '儿媳', '堂伯父', '女婿',
+        #                 '亲家公',
+        #                 '曾祖父', '叔父',
+        #                 '姑母', '师傅', '歌曲原唱', '云孙', '外甥', '姑父', '学妹', '小姑子', '第四任妻子', '偶像',
+        #                 '前任',
+        #                 '表姨', '社长',
+        #                 '亲家母', '战友', '学校身份', '主要作品', '生母', '类别', '外曾祖母', '祖父', '毕业院校',
+        #                 '知名人物',
+        #                 '小舅子', '庶子',
+        #                 '所属机构', '表妹', '制作', '登场作品', '嫂子', '好友', '前公公', '义女', '师兄', '曾孙',
+        #                 '同学',
+        #                 '配音', '堂舅',
+        #                 '相关国内联盟', '外曾祖父', '男朋友', '叔叔', '大姨子', '侄女', '音乐作品', '简称', '义子',
+        #                 '曾祖母',
+        #                 '经纪人', '先夫',
+        #                 '未婚妻', '姨夫', '表姑父', '义兄', '为他人创作音乐', '表侄', '连襟', '姐夫', '出版社',
+        #                 '学生', '弟弟',
+        #                 '同门', '师生',
+        #                 '叔外公', '曾孙女', '教练', '侄孙', '老板', '妹妹', '前队友', '表兄', '孙子', '亡妻',
+        #                 '经纪公司',
+        #                 '代表', '大姑子',
+        #                 '第六任妻子', '搭档', '伯母', '祖母', '领导', '继任', '参演', '表叔', '伯乐', '婶母',
+        #                 '婆婆',
+        #                 '现任领导', '外曾孙女',
+        #                 '表弟', '外甥女婿', '第五任妻子', '编剧', '曾外祖母', '学姐', '义母', '类型', '孙女',
+        #                 '表姐', '姨母',
+        #                 '前妻',
+        #                 '合作院校', '继女', '叔外祖父', '妾', '专职院士数', '主持', '法人', '妯娌', '学校类别',
+        #                 '义弟', '哥哥',
+        #                 '大舅子',
+        #                 '义父', '伯伯', '父亲', '外祖母', '第一任丈夫', '外孙子', '玄孙', '姑姑', '师姐', '大舅哥',
+        #                 '队友',
+        #                 '外甥女', '小姨子',
+        #                 '堂妹']
+        # for word in final_wds:
+        #     if word in relationship:
+        #         final_wds.remove(word)  # 去掉实体中的关系
+        # for i in final_wds:
+        #     if i not in self.all_node_list:
+        #         final_wds.remove(i)
+        # final_dict = {i: self.all_words_dict.get(i) for i in final_wds}  # 每个结点所对应的标签
+        # print(final_dict)
+        # return final_dict  # 返回每个结点所对应的标签
+
+        # words = pseg.cut(question)
+        # for w in words:
+        #     if w.flag not in ['nr', 'nrfg', 'nrt', 'ns', 'nt', 'n', 'nr1', 'nr2', 'nrj', 'nrf', 'ns', 'nsf', 'nz', 'ni',
+        #                       'ng', 'nl'] and w.word in final_wds:
+        #         final_wds.remove(w.word)  # 去掉不满足的词性
+        #
+        #
+        # regin_wds=list()
+        # words = pseg.cut(question)
+        # for w in words:
+        #     if w.flag in ['nr', 'nrfg', 'nrt', 'ns', 'nt', 'n', 'nr1', 'nr2', 'nrj', 'nrf', 'ns', 'nsf', 'nz', 'ni',
+        #                       'ng', 'nl']:
+        #         regin_wds.append(w.word)  # 去掉不满足词性的词语
+        # for wd in regin_wds:
+        #     if wd in relationship:
+        #         regin_wds.remove(wd)  # 去掉关系的词语
+        # final_wds=list()
+        # for wd in regin_wds:
+        #     if wd in self.all_node_list:
+        #         final_wds.append(wd)  # 找到对应的结点
+
+        # stop_wds = []
+        # for wd1 in regin_wds:
+        #     for wd2 in regin_wds:
+        #         if wd1 in wd2 and wd1 != wd2:
+        #             stop_wds.append(wd1)  # stop_wds为其中重复的短的词
+        # final_wds = [i for i in regin_wds if i not in stop_wds]
 
     def check_wods(self, question_list, question):
         """
