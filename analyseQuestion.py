@@ -17,7 +17,7 @@ os.environ['ALL_PROXY'] = "socks5://127.0.0.1:7890"
 
 
 def kmeans_clustering():
-    with open(r'data//train_qa.json', 'r', encoding='utf-8') as f:
+    with open(r'data//test_qa.json', 'r', encoding='utf-8') as f:
         qa_data = json.loads(f.read())
         sample_data = [qa_data[i]['question'] for i in qa_data.keys()]
         # print(sample_data)
