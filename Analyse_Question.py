@@ -1,5 +1,6 @@
 import re
 import json
+import math
 import jieba.posseg
 import jieba
 import ahocorasick
@@ -10,10 +11,53 @@ class AnalyseQuestion:
         """
         加载所有数据结点以及问题
         """
+        self.album_list = [i.strip() for i in open("processed_file//专辑.txt", "r", encoding="utf-8") if i.strip()]
+        print("专辑.txt成功")
+        self.character_list = [i.strip() for i in open("processed_file//人物.txt", "r", encoding="utf-8") if i.strip()]
+        print("人物.txt成功")
+        self.works_list = [i.strip() for i in open("processed_file//作品.txt", "r", encoding="utf-8") if i.strip()]
+        print("作品.txt成功")
+        self.otherNodes_list = [i.strip() for i in open("processed_file//其他结点.txt", "r", encoding="utf-8") if
+                                i.strip()]
+        print("其他结点.txt成功")
+        self.press_list = [i.strip() for i in open("processed_file//出版社.txt", "r", encoding="utf-8") if i.strip()]
+        print("出版社.txt成功")
+        self.association_list = [i.strip() for i in open("processed_file//协会.txt", "r", encoding="utf-8") if
+                                 i.strip()]
+        print("协会.txt成功")
+        self.unit_list = [i.strip() for i in open("processed_file//单位.txt", "r", encoding="utf-8") if i.strip()]
+        print("单位.txt成功")
+        self.school_list = [i.strip() for i in open("processed_file//学校.txt", "r", encoding="utf-8") if
+                            i.strip()]
+        print("学校.txt成功")
+        self.schoolCategory_list = [i.strip() for i in open("processed_file//学校类别.txt", "r", encoding="utf-8") if
+                                    i.strip()]
+        print("学校类别.txt成功")
+        self.filmAndTelevisionWork_list = [i.strip() for i in
+                                           open("processed_file//影视作品.txt", "r", encoding="utf-8") if
+                                           i.strip()]
+        print("影视作品.txt成功")
+        self.literaryWorks_list = [i.strip() for i in open("processed_file//文学作品.txt", "r", encoding="utf-8") if
+                                   i.strip()]
+        print("文学作品.txt成功")
+        self.literaryWorksPlatform_list = [i.strip() for i in
+                                           open("processed_file//文学作品平台.txt", "r", encoding="utf-8") if
+                                           i.strip()]
+        print("文学作品平台.txt成功")
+        self.characteristic_list = [i.strip() for i in
+                                    open("processed_file//特色.txt", "r", encoding="utf-8") if
+                                    i.strip()]
+        print("特色.txt成功")
+        self.varietyPrograms_list = [i.strip() for i in
+                                     open("processed_file//综艺节目.txt", "r", encoding="utf-8") if
+                                     i.strip()]
+        print("综艺节目.txt成功")
+        self.musicWorks_list = [i.strip() for i in
+                                open("processed_file//音乐作品.txt", "r", encoding="utf-8") if
+                                i.strip()]
+        print("音乐作品.txt成功")
         with open("all_node.txt", 'r', encoding='utf-8') as fp:
             self.all_node_list = [i.strip() for i in fp.readlines()]
-        # for i in self.all_node_list:
-        #     jieba.add_word(i, tag='n')
         self.all_words_tree = self.build_actree(self.all_node_list)  # 调用actree函数  # 方便快速查找
         self.all_words_dict = self.build_wdtype_dict()  # 各个结点
         # 问题中的关键词
@@ -75,228 +119,543 @@ class AnalyseQuestion:
         """
         加载可能遇到的问题
         """
-        self.question_simpleIssue_list = [r".*的.*是谁", r".*的.*有哪些"]  # 简单问题的关系
+        question_simpleIssue_list = [r".*的.*是谁[?.？]$", r".*的.*有哪些[？.?]$"]  # 简单问题的关系
         # egg:浅井初的妹妹是谁？     朱清的伯父有哪些？
-        self.question_countBook_list = ["多少本书", "写过多少本书"]  # 依次找问题写下去
+        question_countBook_list = [r".*共写过多少本书？", r".*的音乐作品数量是多少", r".*的作品数量是多少",
+                                   r".*的文学作品有多少", r".*的音乐作品和发行专辑总共有多少",
+                                   r".*的作品和作品总共有多少",
+                                   r"在电影妖怪大战争中主要演员和主要配音的人数总和是多少"]  # 依次找问题写下去
         # egg:许嘉璐一共写过多少本书？
+        question_same_list = [r".*和.*有没有共同的作品", r".*和.*有哪些共同的搭档",
+                              r".*和.*共同代表作品是什么", r".*和.*共同配音的作品是哪部", r".*和.*都参演过哪些作品",
+                              r".*和.*有哪些共同的作品",r".*和.*共同参演的电视剧是什么？"]  # 共同作品问题类型
+        # egg:迪丽热巴和陈若轩有没有共同的作品？
+        question_leader_list = [r".*的历任领导中,有多少人是现任领导", r".*的历任领导中,有哪些人是现任领导"]
+        # egg:湘潭大学的历任领导中，有多少人是现任领导？
+        question_six_list = [r".*的音乐作品中有几首是他的代表作品"]
 
-    def analyze_question(self, question):  # 分析问题
-        """
-        分析问题
-        :param question: 问题
-        :return: {'arg':{结点：标签},'question_types':[标签(问题)所对应的类型]}
-        """
-        data = dict()
-        nodes_dict = self.check_node(question)  # 检查问题中的结点
-        data['arg'] = nodes_dict  # 'arg‘:{结点:标签}
-        types = []  # 问题的类型
-        for type in nodes_dict.values():
-            types += type
-        question_types = []
-        if self.check_wods(self.question_simpleIssue_list, question) and "character" in types:
-            question_types.append("character_to_simpleIssue")
-        if self.check_wods(self.question_countBook_list, question) and "character" in types:
-            question_types.append("character_to_countBook")
+        question_graduate_list = [r".*是哪所大学的毕业生", r".*毕业于哪所大学", r".*的毕业院校是什么学校"]
+        # egg:蔡荣根是哪所大学的毕业生？
+        question_works_list = [r".*的代表作品是什么", r".*有哪些代表作品", r".*的音乐作品是什么", r".*有哪些音乐作品",
+                               r".*有哪些作品", ".*配音了哪些作品"]
+        # egg袁阔成的代表作品是什么？
+        question_publish_list = [r".*的作品中,哪一个是由.*出版的",r".*的.*中，有哪些是由.*出版的？",r".*的作品中，哪些是由.*出版的"]
+        # egg:赵静的作品中，哪一本是由海燕出版社出版的？
+        question_press_list = [r".*是由哪家出版社出版的", r".*是由哪个出版社出版的", r".*的.*是由哪家出版社出版的"]
+        # egg:墨泠的作品"时笙"是由哪家出版社出版的？
+        question_other_list = [r"参演过.*的演员中，有哪些人的代表作品是.*"]
+        # egg:参演过顶楼的演员中，有哪些人的代表作品是熔炉？
+        question_count_publish_list = [r".*的作品中，有多少是由.*出版的"]
 
-        data['question_types'] = question_types  # 其中遇到的问题类型   # 'question_types’:[问题类型]
-        return data  # {'arg':{结点：标签},'question_types':[标签(问题)所对应的类型]}
+        question_unit_list = [r".*是哪个机构的下属机构？",r".*的毕业院校是哪个机构所属",r".*的毕业院校是什么性质的学校，其所属机构是什么？"]
+        #程青的毕业院校是哪个机构所属？
+        question_originalsinging_list = [r".*的原唱是谁",r".*的音乐作品中，有哪些是他的原唱", r".*的音乐作品中，有哪些是她的原唱",
+                              r".*的音乐作品中，哪些歌曲的原唱不是他自己",r".*的原唱是谁",r".*这首歌的原唱是谁",r".*的.*中，有哪些歌曲的原唱是.*",r".*这首歌的原唱是谁",r".*的.*中，有哪些歌曲是.*的原唱",r".*的作品中，有多少首是由.*原唱的"]
 
-    def check_node(self, question):
-        """
-        提取出结点，同时返回每个结点所对应的标签
-        :param question: 问题
-        :return: 返回每个结点所对应的标签
-        """
-        # function1:
-        print(question)
-        regin_wds = []
-        for i in self.all_words_tree.iter(question):  # ahocorasick库 匹配问题  iter返回一个元组，i的形式如(3, (23192, '小明'))
-            wd = i[1][1]
-            regin_wds.append(wd)  # 寻找实体
-        stop_wds = []
+        question_schoolCategory_list = [r".*的办学性质是什么"]
+        # 程青的毕业院校是哪个机构所属？
+        question_doublequestion_list = [r".*的.*中，谁也是.*的.*",r"参演.*的演员中，谁的.*中是.*",r".*的演员中，谁的.*是.*",r"母亲是条河的主要演员中，谁的.*是.*",r'.*的.*中，谁的.*是.*',r"朴所罗门的代表作品中，有哪些是李玉玺参演过的？答案"]
+        # 程青的毕业院校是哪个机构所属？
+        question_problemtoschool_list = [r".*演员中，毕业于.*演员有哪些？",r".*的.*中，.*毕业于.*",r".*的.*中，.*毕业院校.*"]
+        # 程青的毕业院校是哪个机构所属？
+        question_book_list = [r".*写过哪些.*"]
+        # 张荐写过哪些作品？
+        question_samePartner_list = [r".*共同的搭档.*"]
+        # 唐雅菁和黄莺有哪些共同的搭档？
+        # 马修·古迪和马克·斯特朗有没有共同的搭档
+
+        return {"question_simpleIssue": question_simpleIssue_list,
+                "question_countBook": question_countBook_list,
+                "question_same": question_same_list,
+                "question_leader": question_leader_list,
+                "question_six": question_six_list,
+                "question_graduate": question_graduate_list,
+                "question_works": question_works_list,
+                "question_publish": question_publish_list,
+                "question_press": question_press_list,
+                "question_other": question_other_list,
+                "question_count_publish": question_count_publish_list,
+                "question_unit": question_unit_list,
+                "question_originalsinging": question_originalsinging_list,
+                "question_schoolCategory": question_schoolCategory_list,
+                "question_doublequestion": question_doublequestion_list,
+                "question_problemtoschool": question_problemtoschool_list,
+                "question_book": question_book_list,
+                "question_samePartner": question_samePartner_list,}
+
+    def fenci(self, s):
+        seg_list = jieba.cut(s)
+        result = []
+        for seg in seg_list:
+            seg = ''.join(seg.split())
+            if seg not in ('，', '?', '。', "\n", "\n\n", ''):
+                result.append(seg)
+        return result
+
+    # 处理文本列表
+    def proceed(self, texts):
+        docs = []
+        for text in texts:
+            doc = self.fenci(text)
+            docs.append(doc)
+        return docs
+
+    # 计算TF
+    def tf(self, docs):
+        tf_word = []
+        for doc in docs:
+            doc_count = len(doc)
+            tf = {}
+            for word in doc:
+                word_count = doc.count(word)
+                word_tf = 1.0 * word_count / doc_count
+                tf[word] = word_tf
+            tf_word.append(tf)
+        return tf_word
+
+    # 计算IDF
+    def idf(self, docs):
+        word2df = {}
+        docs_count = len(docs)
+        for doc in docs:
+            for word in set(doc):
+                if word not in word2df:
+                    word2df[word] = 1
+                else:
+                    word2df[word] += 1
+        idf_word = {}
+        for word, df in word2df.items():
+            idf_word[word] = math.log(docs_count / (df + 1)) + 1  # 加1以防止分母为0
+        return idf_word
+
+    # 计算TF-IDF
+    def tf_idf(self, tf_word, idf_word):
+        tfidf_word = []
+        for tf in tf_word:
+            tfidf = {}
+            for word, tf_val in tf.items():
+                tfidf[word] = tf_val * idf_word.get(word, 0)
+            tfidf_word.append(tfidf)
+        return tfidf_word
+
+    # 计算余弦相似度
+    def cosine_sim(self, tfidf1, tfidf2):
+        words = list(set(tfidf1.keys()).union(set(tfidf2.keys())))
+        vec1 = [tfidf1.get(word, 0) for word in words]
+        vec2 = [tfidf2.get(word, 0) for word in words]
+        dot_product = sum(a * b for a, b in zip(vec1, vec2))
+        magnitude1 = math.sqrt(sum(a * a for a in vec1))
+        magnitude2 = math.sqrt(sum(b * b for b in vec2))
+        if not magnitude1 or not magnitude2:
+            return 0.0
+        return dot_product / (magnitude1 * magnitude2)
+
+    # def run_tf_idf(self, q1, q2):
+    #     # 示例文本
+    #     texts = [q1, q2]
+    #
+    #     # 处理文本
+    #     docs = self.proceed(texts)
+    #
+    #     # 计算TF
+    #     tf_word = self.tf(docs)
+    #
+    #     # 计算IDF
+    #     idf_word = self.idf(docs)
+    #
+    #     # 计算TF-IDF
+    #     tfidf_word = self.tf_idf(tf_word, idf_word)
+    #     # 计算相似度
+    #     similarity = self.cosine_sim(tfidf_word[0], tfidf_word[1])
+    #     return similarity
+    def find_max(self, regin_wds):
+        stop_wds = ['电', '金', '哥哥', '师爷', '母亲', '战友', '经纪人', '教练', '老板', '师姐', '妖怪', '?','七', '蓝','？', '这首歌', '唱', '是谁', '原','?','歌','音乐','其他','别','请问','歌手','家','人', '演员', '角色','好友','搭档','和音','影','电视','黑龙','江美','首','丈夫','毕业','儿子','同学','不', '生活','银','这本书','王','父亲']
         for wd1 in regin_wds:
             for wd2 in regin_wds:
                 if wd1 in wd2 and wd1 != wd2:
                     stop_wds.append(wd1)  # stop_wds为其中重复的短的词
-        final_wds = [i for i in regin_wds if i not in stop_wds]  # 去掉重复的词语
-        relationship = ['堂姐', '连载平台', '侄孙媳妇', '合作人', '文学作品', '弟媳', '导师', '堂小舅子',
-                        '摄影作品', '大爷爷',
-                        '师爷', '作者',
-                        '继母', '办学性质', '未婚夫', '前夫', '姑妈', '恋人', '其他关系', '第三任妻子', '师妹',
-                        '主要配音',
-                        '第一任妻子',
-                        '养父', '对手', '养母', '发行专辑', '设立单位', '女儿', '原配', '挚爱', '主要演员', '义妹',
-                        '曾孙子',
-                        '成员', '侄孙子',
-                        '养女', '公公', '历任领导', '姨父', '堂侄', '丈夫', '第二任妻子', '办学团体', '岳父',
-                        '外祖父', '伯父',
-                        '学弟', '师父',
-                        '伴侣', '表哥', '学长', '妹夫', '姐姐', '师祖', '嫡母', '岳母', '男友', '曾外孙子', '舅母',
-                        '前女友',
-                        '堂兄', '老师',
-                        '爱人', '小叔子', '儿子', '女朋友', '奶奶', '综艺节目', '恩师', '外孙', '创始人', '员工',
-                        '执导',
-                        '侄子', '弟子',
-                        '师弟', '母亲', '堂哥', '前儿媳', '主要角色', '舅父', '妻子', '外孙女', '第二任丈夫',
-                        '生父', '旧爱',
-                        '代表作品',
-                        '朋友', '学校特色', '妻姐', '养子', '兄弟', '创办', '旗下艺人', '曾外祖父', '音乐视频',
-                        '前男友',
-                        '外曾孙子', '堂弟',
-                        '继子', '助理', '院系设置', '继父', '大伯哥', '徒弟', '知己', '儿媳', '堂伯父', '女婿',
-                        '亲家公',
-                        '曾祖父', '叔父',
-                        '姑母', '师傅', '歌曲原唱', '云孙', '外甥', '姑父', '学妹', '小姑子', '第四任妻子', '偶像',
-                        '前任',
-                        '表姨', '社长',
-                        '亲家母', '战友', '学校身份', '主要作品', '生母', '类别', '外曾祖母', '祖父', '毕业院校',
-                        '知名人物',
-                        '小舅子', '庶子',
-                        '所属机构', '表妹', '制作', '登场作品', '嫂子', '好友', '前公公', '义女', '师兄', '曾孙',
-                        '同学',
-                        '配音', '堂舅',
-                        '相关国内联盟', '外曾祖父', '男朋友', '叔叔', '大姨子', '侄女', '音乐作品', '简称', '义子',
-                        '曾祖母',
-                        '经纪人', '先夫',
-                        '未婚妻', '姨夫', '表姑父', '义兄', '为他人创作音乐', '表侄', '连襟', '姐夫', '出版社',
-                        '学生', '弟弟',
-                        '同门', '师生',
-                        '叔外公', '曾孙女', '教练', '侄孙', '老板', '妹妹', '前队友', '表兄', '孙子', '亡妻',
-                        '经纪公司',
-                        '代表', '大姑子',
-                        '第六任妻子', '搭档', '伯母', '祖母', '领导', '继任', '参演', '表叔', '伯乐', '婶母',
-                        '婆婆',
-                        '现任领导', '外曾孙女',
-                        '表弟', '外甥女婿', '第五任妻子', '编剧', '曾外祖母', '学姐', '义母', '类型', '孙女',
-                        '表姐', '姨母',
-                        '前妻',
-                        '合作院校', '继女', '叔外祖父', '妾', '专职院士数', '主持', '法人', '妯娌', '学校类别',
-                        '义弟', '哥哥',
-                        '大舅子',
-                        '义父', '伯伯', '父亲', '外祖母', '第一任丈夫', '外孙子', '玄孙', '姑姑', '师姐', '大舅哥',
-                        '队友',
-                        '外甥女', '小姨子',
-                        '堂妹']
-        for word in final_wds:
-            if word in relationship:
-                final_wds.remove(word)  # 去掉实体中的关系
-        final_dict = {i: self.all_words_dict.get(i) for i in final_wds for label in self.all_words_dict.get(i) if
-                      label not in ['musicWorks', 'filmAndTelevisionWork', 'works', 'album','literaryWorks']}  # 每个结点所对应的标签
-        # final_dict = {i: self.all_words_dict.get(i) for i in final_wds}  # 每个结点所对应的标签
-        print(final_dict)
-        return final_dict  # 返回每个结点所对应的标签
+        final_wds = [i for i in regin_wds if i not in stop_wds]
+        return final_wds
 
-        # funciton2:
-        # final_wds = list()
-        # words = jieba.posseg.cut(question)
-        # for w in words:
-        #     if w.flag in ['nr', 'nrfg', 'nrt', 'ns', 'nt', 'n', 'nr1', 'nr2', 'nrj', 'nrf', 'ns', 'nsf', 'nz', 'ni',
-        #                   'ng', 'nl']:
-        #         final_wds.append(w.word)  # 去掉不满足的词性
-        # print(words)
-        # relationship = ['堂姐', '连载平台', '侄孙媳妇', '合作人', '文学作品', '弟媳', '导师', '堂小舅子',
-        #                 '摄影作品', '大爷爷',
-        #                 '师爷', '作者',
-        #                 '继母', '办学性质', '未婚夫', '前夫', '姑妈', '恋人', '其他关系', '第三任妻子', '师妹',
-        #                 '主要配音',
-        #                 '第一任妻子',
-        #                 '养父', '对手', '养母', '发行专辑', '设立单位', '女儿', '原配', '挚爱', '主要演员', '义妹',
-        #                 '曾孙子',
-        #                 '成员', '侄孙子',
-        #                 '养女', '公公', '历任领导', '姨父', '堂侄', '丈夫', '第二任妻子', '办学团体', '岳父',
-        #                 '外祖父', '伯父',
-        #                 '学弟', '师父',
-        #                 '伴侣', '表哥', '学长', '妹夫', '姐姐', '师祖', '嫡母', '岳母', '男友', '曾外孙子', '舅母',
-        #                 '前女友',
-        #                 '堂兄', '老师',
-        #                 '爱人', '小叔子', '儿子', '女朋友', '奶奶', '综艺节目', '恩师', '外孙', '创始人', '员工',
-        #                 '执导',
-        #                 '侄子', '弟子',
-        #                 '师弟', '母亲', '堂哥', '前儿媳', '主要角色', '舅父', '妻子', '外孙女', '第二任丈夫',
-        #                 '生父', '旧爱',
-        #                 '代表作品',
-        #                 '朋友', '学校特色', '妻姐', '养子', '兄弟', '创办', '旗下艺人', '曾外祖父', '音乐视频',
-        #                 '前男友',
-        #                 '外曾孙子', '堂弟',
-        #                 '继子', '助理', '院系设置', '继父', '大伯哥', '徒弟', '知己', '儿媳', '堂伯父', '女婿',
-        #                 '亲家公',
-        #                 '曾祖父', '叔父',
-        #                 '姑母', '师傅', '歌曲原唱', '云孙', '外甥', '姑父', '学妹', '小姑子', '第四任妻子', '偶像',
-        #                 '前任',
-        #                 '表姨', '社长',
-        #                 '亲家母', '战友', '学校身份', '主要作品', '生母', '类别', '外曾祖母', '祖父', '毕业院校',
-        #                 '知名人物',
-        #                 '小舅子', '庶子',
-        #                 '所属机构', '表妹', '制作', '登场作品', '嫂子', '好友', '前公公', '义女', '师兄', '曾孙',
-        #                 '同学',
-        #                 '配音', '堂舅',
-        #                 '相关国内联盟', '外曾祖父', '男朋友', '叔叔', '大姨子', '侄女', '音乐作品', '简称', '义子',
-        #                 '曾祖母',
-        #                 '经纪人', '先夫',
-        #                 '未婚妻', '姨夫', '表姑父', '义兄', '为他人创作音乐', '表侄', '连襟', '姐夫', '出版社',
-        #                 '学生', '弟弟',
-        #                 '同门', '师生',
-        #                 '叔外公', '曾孙女', '教练', '侄孙', '老板', '妹妹', '前队友', '表兄', '孙子', '亡妻',
-        #                 '经纪公司',
-        #                 '代表', '大姑子',
-        #                 '第六任妻子', '搭档', '伯母', '祖母', '领导', '继任', '参演', '表叔', '伯乐', '婶母',
-        #                 '婆婆',
-        #                 '现任领导', '外曾孙女',
-        #                 '表弟', '外甥女婿', '第五任妻子', '编剧', '曾外祖母', '学姐', '义母', '类型', '孙女',
-        #                 '表姐', '姨母',
-        #                 '前妻',
-        #                 '合作院校', '继女', '叔外祖父', '妾', '专职院士数', '主持', '法人', '妯娌', '学校类别',
-        #                 '义弟', '哥哥',
-        #                 '大舅子',
-        #                 '义父', '伯伯', '父亲', '外祖母', '第一任丈夫', '外孙子', '玄孙', '姑姑', '师姐', '大舅哥',
-        #                 '队友',
-        #                 '外甥女', '小姨子',
-        #                 '堂妹']
-        # for word in final_wds:
-        #     if word in relationship:
-        #         final_wds.remove(word)  # 去掉实体中的关系
-        # for i in final_wds:
-        #     if i not in self.all_node_list:
-        #         final_wds.remove(i)
-        # final_dict = {i: self.all_words_dict.get(i) for i in final_wds}  # 每个结点所对应的标签
-        # print(final_dict)
-        # return final_dict  # 返回每个结点所对应的标签
-
-        # words = pseg.cut(question)
-        # for w in words:
-        #     if w.flag not in ['nr', 'nrfg', 'nrt', 'ns', 'nt', 'n', 'nr1', 'nr2', 'nrj', 'nrf', 'ns', 'nsf', 'nz', 'ni',
-        #                       'ng', 'nl'] and w.word in final_wds:
-        #         final_wds.remove(w.word)  # 去掉不满足的词性
-        #
-        #
-        # regin_wds=list()
-        # words = pseg.cut(question)
-        # for w in words:
-        #     if w.flag in ['nr', 'nrfg', 'nrt', 'ns', 'nt', 'n', 'nr1', 'nr2', 'nrj', 'nrf', 'ns', 'nsf', 'nz', 'ni',
-        #                       'ng', 'nl']:
-        #         regin_wds.append(w.word)  # 去掉不满足词性的词语
-        # for wd in regin_wds:
-        #     if wd in relationship:
-        #         regin_wds.remove(wd)  # 去掉关系的词语
-        # final_wds=list()
-        # for wd in regin_wds:
-        #     if wd in self.all_node_list:
-        #         final_wds.append(wd)  # 找到对应的结点
-
-        # stop_wds = []
-        # for wd1 in regin_wds:
-        #     for wd2 in regin_wds:
-        #         if wd1 in wd2 and wd1 != wd2:
-        #             stop_wds.append(wd1)  # stop_wds为其中重复的短的词
-        # final_wds = [i for i in regin_wds if i not in stop_wds]
-
-    def check_wods(self, question_list, question):
+    def analyze_question(self, question):  # 分析问题
         """
-        :param question_list: 某种问题类型的关键词
         :param question: 问题
-        :return: 是否符合正则表达式
+        :return: {'arg':{结点：标签},'question_types':标签(问题)所对应的类型}
         """
-        for q in question_list:
-            if re.search(q, question):
-                return True
-        return False
+        data = dict()  # 定义返回字典
+        maxValue = 0
+        question_type = ""
+        question_dict = self.possible_isssues()
+        flag = 0
+        for key in question_dict:
+            for q in question_dict[key]:
+                if re.search(q, question):  # 匹配正则表达式
+                    question_type = key
+                    flag = 1
+                    break
+                docs = self.proceed([question, q])  # 处理文本
+                tf_word = self.tf(docs)  # 计算TF
+                idf_word = self.idf(docs)  # 计算IDF
+                tfidf_word = self.tf_idf(tf_word, idf_word)  # 计算TF-IDF
+                similarity = self.cosine_sim(tfidf_word[0], tfidf_word[1])  # 计算相似度
+                if similarity > maxValue:
+                    maxValue = similarity
+                    question_type = key  # 看该问题和哪个问题模板相似
+            if flag == 1:
+                break
+        node_list = list()
+        if question_type == 'question_simpleIssue':
+            if '原唱' in question:
+                for character in self.character_list:
+                    if character in question:
+                        node_list.append(character)
+                node_list = self.find_max(node_list)
+                for musicWorks in self.musicWorks_list:
+                    if musicWorks in question:
+                        node_list.append(musicWorks)
+                node_list = self.find_max(node_list)
+                node_list = list(set(node_list))
+                mystop=['？', '这首歌', '唱', '是谁', '原','?','歌','音乐','其他','别','请问','歌手']
+                for i in mystop:
+                    if i in node_list:
+                        node_list.remove(i)
+                if node_list:
+                    data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+                else:
+                    data['arg'] = {"#####": '#####'}
+                data["question_types"] = "character_to_originalsinging"
+                print("character_to_originalsinging")
+                print(data)
+                return data
+            else:
+                for character in self.character_list:
+                    if character in question:
+                        node_list.append(character)
+                node_list = self.find_max(node_list)
+                for school in self.school_list:
+                    if school in question:
+                        node_list.append(school)
+                node_list = self.find_max(node_list)
+                for literaryWorks in self.literaryWorks_list:
+                    if literaryWorks in question:
+                        node_list.append(literaryWorks)
+                node_list = self.find_max(node_list)
+                if node_list:
+                    data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+                else:
+                    data['arg'] = {"#####": '#####'}
+                data["question_types"] = "character_to_simpleIssue"
+                print("character_to_simpleIssue")
+                print(data)
+                return data
+        elif question_type == 'question_countBook':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            for school in self.school_list:
+                if school in question:
+                    node_list.append(school)
+            for filmAndTelevisionWork in self.filmAndTelevisionWork_list:
+                if filmAndTelevisionWork in question:
+                    node_list.append(filmAndTelevisionWork)
+            node_list = self.find_max(node_list)
+            node_list=list(set(node_list))
+            my_stop=['人', '演员', '角色','好友','搭档','和音','影','电视','黑龙','江美','首','戏', '毕业']
+            for i in my_stop:
+                if i in question:
+                    if i in node_list:
+                        node_list.remove(i)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_countBook"
+            print("character_to_countBook")
+            print(data)
+            return data
+        elif question_type == 'question_same':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_same"
+            print("character_to_same")
+            print(data)
+            return data
+        elif question_type == 'question_leader':
+            for school in self.school_list:
+                if school in question:
+                    node_list.append(school)
+            node_list = self.find_max(node_list)
+            for association in self.association_list:
+                if association in question:
+                    node_list.append(association)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_leader"
+            print("character_to_leader")
+            print(data)
+            return data
+        elif question_type == 'question_six':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_six"
+            print("character_to_six")
+            print(data)
+            return data
+        elif question_type == 'question_graduate':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_graduate"
+            print("character_to_graduate")
+            print(data)
+            return data
+        elif question_type == 'question_works':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_works"
+            print("character_to_works")
+            print(data)
+            return data
+        elif question_type == 'question_publish':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+
+            for press in self.press_list:
+                if press in question:
+                    node_list.append(press)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_publish"
+            print("character_to_publish")
+            print(data)
+            return data
+        elif question_type == 'question_press':
+            for works in self.works_list:
+                if works in question:
+                    node_list.append(works)
+            node_list = self.find_max(node_list)
+
+            for filmAndTelevisionWork in self.filmAndTelevisionWork_list:
+                if filmAndTelevisionWork in question:
+                    node_list.append(filmAndTelevisionWork)
+            node_list = self.find_max(node_list)
+
+            for literaryWorks in self.literaryWorks_list:
+                if literaryWorks in question:
+                    node_list.append(literaryWorks)
+            node_list = self.find_max(node_list)
+
+            for musicWorks in self.musicWorks_list:
+                if musicWorks in question:
+                    node_list.append(musicWorks)
+            node_list = self.find_max(node_list)
+
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            # for node in node_list:
+            #     if node in ["？", "?", "家"]:
+            #         node_list.remove(node)
+            node_list=list(set(node_list))
+            if '？' in node_list:
+                node_list.remove('？')
+            if '?' in node_list:
+                node_list.remove('?')
+            if '家' in node_list:
+                node_list.remove('家')
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_press"
+            print("character_to_press")
+            print(data)
+            return data
+        elif question_type == 'question_other':
+            for filmAndTelevisionWork in self.filmAndTelevisionWork_list:
+                if filmAndTelevisionWork in question:
+                    node_list.append(filmAndTelevisionWork)
+            node_list = self.find_max(node_list)
+            for works in self.works_list:
+                if works in question:
+                    node_list.append(works)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_other"
+            print("character_to_other")
+            print(data)
+            return data
+        elif question_type == 'question_count_publish':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            for press in self.press_list:
+                if press in question:
+                    node_list.append(press)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_count_publish"
+            print("character_to_count_publish")
+            print(data)
+            return data
+        elif question_type == 'question_unit':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            for school in self.school_list:
+                if school in question:
+                    node_list.append(school)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_unit"
+            print("character_to_unit")
+            print(data)
+            return data
+        elif question_type == 'question_orginalsinging':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            for musicWorks in self.musicWorks_list:
+                if musicWorks in question:
+                    node_list.append(musicWorks)
+            node_list = self.find_max(node_list)
+            mystop = ['？', '这首歌', '唱', '是谁', '原','?','歌','音乐','其他','别','请问','歌手']
+            for i in mystop:
+                if i in node_list:
+                    node_list.remove(i)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_originalsinging"
+            print("character_to_originalsinging")
+            print(data)
+            return data
+        elif question_type == 'question_schoolCategory':
+            for school in self.school_list:
+                if school in question:
+                    node_list.append(school)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_schoolCategory"
+            print("character_to_schoolCategory")
+            print(data)
+            return data
+        elif question_type == 'question_doublequestion':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            for school in self.school_list:
+                if school in question:
+                    node_list.append(school)
+            for filmAndTelevisionWork in self.filmAndTelevisionWork_list:
+                if filmAndTelevisionWork in question:
+                    node_list.append(filmAndTelevisionWork)
+            node_list = self.find_max(node_list)
+            mystop = ['？', '这首歌', '唱', '是谁', '原','?','歌','音乐','其他','别','请问','歌手','家','人', '演员', '角色','好友','搭档','和音','影','电视','黑龙','江美','首','丈夫','毕业','儿子','同学']
+            for i in mystop:
+                if i in node_list:
+                    node_list.remove(i)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_doublequestion"
+            print("character_to_doublequestion")
+            print(data)
+            return data
+        elif question_type == 'question_problemtoschool':
+            for school in self.school_list:
+                if school in question:
+                    node_list.append(school)
+            node_list = self.find_max(node_list)
+            for filmAndTelevisionWork in self.filmAndTelevisionWork_list:
+                if filmAndTelevisionWork in question:
+                    node_list.append(filmAndTelevisionWork)
+            node_list = self.find_max(node_list)
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_problemtoschool"
+            print("character_to_problemtoschool")
+            print(data)
+            return data
+        elif question_type == 'question_book':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data["question_types"] = "character_to_book"
+            print("character_to_book")
+            print(data)
+            return data
+        elif question_type == 'question_samePartner':
+            for character in self.character_list:
+                if character in question:
+                    node_list.append(character)
+            node_list = self.find_max(node_list)
+            if node_list:
+                data['arg'] = {i: self.all_words_dict.get(i) for i in node_list}
+            else:
+                data['arg'] = {"#####": '#####'}
+            data['question_types'] = "samePartner"
+            print("samePartner")
+            print(data)
+            return data

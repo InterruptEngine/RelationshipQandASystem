@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e882df71-3964-4004-85e9-5dbf499fcbd9" name="更改" comment="陈鑫旺__建立知识图谱new" />
+    <list default="true" id="a79c7e8b-d7ca-4601-8396-f06900854594" name="更改" comment="陈鑫旺__建立知识图谱new">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Analyse_Question.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyse_Question.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CRQandA_start.py" beforeDir="false" afterPath="$PROJECT_DIR$/CRQandA_start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Execute_Statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/Execute_Statement.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -23,26 +21,21 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
-  </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
-}</component>
-  <component name="ProjectId" id="2hDSsAEVChSG96dGoZpO5AO5XNg" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2ilVhF5SUn6bLasQnxbypo1f1QK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Python.FindNodeAndRelationship.executor": "Run",
-    "Python.UploadDataToN4o4j.executor": "Run",
+    "Python.CRQandA_start.executor": "Run",
+    "Python.Execute_Statement.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/大三作业/大三下/综合课程设计三/CharacterRelationshipQandASystem",
     "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
@@ -50,12 +43,12 @@
   }
 }]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\大三作业\大三下\综合课程设计三\CharacterRelationshipQandASystem\data" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\大三作业\大三下\综合课程设计三\CharacterRelationshipQandASystem" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.UploadDataToN4o4j">
-    <configuration name="FindNodeAndRelationship" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.CRQandA_start">
+    <configuration name="CRQandA_start" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CharacterRelationshipQandASystem" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -69,7 +62,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/FindNodeAndRelationship.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/CRQandA_start.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -78,7 +71,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="UploadDataToN4o4j" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Execute_Statement" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="CharacterRelationshipQandASystem" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -92,7 +85,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/UploadDataToN4o4j.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Execute_Statement.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -103,8 +96,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.UploadDataToN4o4j" />
-        <item itemvalue="Python.FindNodeAndRelationship" />
+        <item itemvalue="Python.CRQandA_start" />
+        <item itemvalue="Python.Execute_Statement" />
       </list>
     </recent_temporary>
   </component>
@@ -118,169 +111,24 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="e882df71-3964-4004-85e9-5dbf499fcbd9" name="更改" comment="" />
-      <created>1717127358560</created>
+      <changelist id="a79c7e8b-d7ca-4601-8396-f06900854594" name="更改" comment="陈鑫旺__建立知识图谱new" />
+      <created>1720065269478</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1717127358560</updated>
-      <workItem from="1717127362223" duration="5942000" />
-      <workItem from="1717326131458" duration="1844000" />
-      <workItem from="1717413149700" duration="5745000" />
-      <workItem from="1717484135573" duration="31000" />
-      <workItem from="1717488010914" duration="14089000" />
-      <workItem from="1717549917828" duration="19139000" />
-      <workItem from="1717584488791" duration="50000" />
-      <workItem from="1717584548842" duration="490000" />
-      <workItem from="1717593010343" duration="973000" />
-      <workItem from="1717594416011" duration="78000" />
-      <workItem from="1717596445839" duration="855000" />
+      <updated>1720065269478</updated>
+      <workItem from="1720065271744" duration="1089000" />
     </task>
-    <task id="LOCAL-00001" summary="第一次提交:知识图谱数据数据处理">
-      <option name="closed" value="true" />
-      <created>1717416923563</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1717416923563</updated>
-    </task>
-    <task id="LOCAL-00002" summary="2024年6月3日代码提交">
-      <option name="closed" value="true" />
-      <created>1717420758728</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1717420758728</updated>
-    </task>
-    <task id="LOCAL-00003" summary="陈鑫旺__部分的数据建立">
-      <option name="closed" value="true" />
-      <created>1717500841888</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1717500841888</updated>
-    </task>
-    <task id="LOCAL-00004" summary="陈鑫旺__部分的数据建立">
-      <option name="closed" value="true" />
-      <created>1717502651504</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1717502651504</updated>
-    </task>
-    <task id="LOCAL-00005" summary="陈鑫旺__各个结点数据存储">
-      <option name="closed" value="true" />
-      <created>1717506129977</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1717506129977</updated>
-    </task>
-    <task id="LOCAL-00006" summary="陈鑫旺__建立neo4j">
-      <option name="closed" value="true" />
-      <created>1717559252566</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1717559252566</updated>
-    </task>
-    <task id="LOCAL-00007" summary="陈鑫旺__建立neo4j">
-      <option name="closed" value="true" />
-      <created>1717559411148</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1717559411148</updated>
-    </task>
-    <task id="LOCAL-00008" summary="陈鑫旺__更改内容">
-      <option name="closed" value="true" />
-      <created>1717561158405</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1717561158405</updated>
-    </task>
-    <task id="LOCAL-00009" summary="陈鑫旺__知识图谱创建修改第一次">
-      <option name="closed" value="true" />
-      <created>1717578698972</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1717578698972</updated>
-    </task>
-    <task id="LOCAL-00010" summary="陈鑫旺__知识图谱创建修改第一次">
-      <option name="closed" value="true" />
-      <created>1717578708079</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1717578708079</updated>
-    </task>
-    <task id="LOCAL-00011" summary="陈鑫旺__知识图谱创建修改第一次">
-      <option name="closed" value="true" />
-      <created>1717578985404</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1717578985404</updated>
-    </task>
-    <task id="LOCAL-00012" summary="陈鑫旺__建立知识图谱new">
-      <option name="closed" value="true" />
-      <created>1717582025191</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1717582025191</updated>
-    </task>
-    <task id="LOCAL-00013" summary="陈鑫旺__建立知识图谱new">
-      <option name="closed" value="true" />
-      <created>1717584205941</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1717584205941</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="origin/main" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="第一次提交:知识图谱数据数据处理" />
-    <MESSAGE value="2024年6月3日代码提交" />
-    <MESSAGE value="陈鑫旺__部分的数据建立" />
-    <MESSAGE value="陈鑫旺__各个结点数据存储" />
-    <MESSAGE value="陈鑫旺__建立neo4j" />
-    <MESSAGE value="陈鑫旺__更改内容" />
-    <MESSAGE value="陈鑫旺__知识图谱创建修改第一次" />
     <MESSAGE value="陈鑫旺__建立知识图谱new" />
     <option name="LAST_COMMIT_MESSAGE" value="陈鑫旺__建立知识图谱new" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$FindNodeAndRelationship.coverage" NAME="FindNodeAndRelationship 覆盖结果" MODIFIED="1717581908648" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$UploadDataToN4o4j.coverage" NAME="UploadDataToN4o4j 覆盖结果" MODIFIED="1717584112540" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$CRQandA_start.coverage" NAME="CRQandA_start 覆盖结果" MODIFIED="1719979311976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$Execute_Statement.coverage" NAME="Execute_Statement 覆盖结果" MODIFIED="1719966499658" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

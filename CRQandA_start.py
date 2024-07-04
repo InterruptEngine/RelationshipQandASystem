@@ -14,6 +14,8 @@ class RelationshipRobot:
         if not data_dict:
             return [answer]
         answer_list = self.execute_statement.execute_main(data_dict, question)  # 返回问题答案
+        if answer_list == []:
+            return [answer]
         if not answer_list:
             return [answer]
         else:
@@ -41,16 +43,18 @@ if __name__ == '__main__':
         count += 1
     print("正确率为:", flag / count)
 
+
     # 答案
     # result_dict = dict()
     # with open("data//test_qa.json", "r", encoding='utf-8') as fp:
     #     infor_dict = json.load(fp)
     # for i in range(len(infor_dict)):
     #     temp_dict = infor_dict[str(i)]
+    #     print(temp_dict)
     #     question = temp_dict["question"]
     #     answer_list = robot.chat_main(question)
-    #     temp_dict["answer"] = answer_list
-    #     result_dict[str(i)] = temp_dict
+    #     # temp_dict["answer"] = answer_list
+    #     result_dict[str(i)] = answer_list
     #     print(question, "\t\t", answer_list, "\t\t", i)
-    # with open("result_qa.json", "w", encoding='utf-8') as fp:
+    # with open("西唯兵瘦瘦小陈-38274_result.json", "w",encoding='utf-8') as fp:
     #     json.dump(result_dict, fp)
