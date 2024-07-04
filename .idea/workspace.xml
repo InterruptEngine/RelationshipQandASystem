@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a79c7e8b-d7ca-4601-8396-f06900854594" name="更改" comment="陈鑫旺__建立知识图谱new">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Analyse_Question.py" beforeDir="false" afterPath="$PROJECT_DIR$/Analyse_Question.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CRQandA_start.py" beforeDir="false" afterPath="$PROJECT_DIR$/CRQandA_start.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Execute_Statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/Execute_Statement.py" afterDir="false" />
-    </list>
+    <list default="true" id="a79c7e8b-d7ca-4601-8396-f06900854594" name="更改" comment="最终内容" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,19 +111,40 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720065269478</updated>
-      <workItem from="1720065271744" duration="1089000" />
+      <workItem from="1720065271744" duration="2470000" />
     </task>
+    <task id="LOCAL-00001" summary="最终内容">
+      <option name="closed" value="true" />
+      <created>1720067706583</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1720067706583</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="陈鑫旺__建立知识图谱new" />
-    <option name="LAST_COMMIT_MESSAGE" value="陈鑫旺__建立知识图谱new" />
+    <MESSAGE value="最终内容" />
+    <option name="LAST_COMMIT_MESSAGE" value="最终内容" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$CRQandA_start.coverage" NAME="CRQandA_start 覆盖结果" MODIFIED="1719979311976" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$CRQandA_start.coverage" NAME="CRQandA_start 覆盖结果" MODIFIED="1720067414544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CharacterRelationshipQandASystem$Execute_Statement.coverage" NAME="Execute_Statement 覆盖结果" MODIFIED="1719966499658" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
